@@ -1,0 +1,62 @@
+.purchase {
+    padding: 2rem;
+    text-align: center;
+    background-color: #f4f9ff;
+    min-height: calc(100vh - 120px);
+  }
+  
+  .purchase__title {
+    font-size: 2rem;
+    color: #0a2342;
+    margin-bottom: 2rem;
+  }
+  
+  .purchase__card {
+    max-width: 400px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .purchase__name {
+    font-size: 1.5rem;
+    color: #0a2342;
+    margin-bottom: 0.5rem;
+    background-color: black;
+  }
+  
+  .purchase__desc {
+    font-size: 1rem;
+    color: #444;
+    margin-bottom: 1rem;
+  }
+  
+  .purchase__price {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #007bff;
+    margin-bottom: 1.5rem;
+  }
+  
+  .purchase__btn {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    background-color: #0a2342;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+  }
+  
+  .purchase__btn:hover {
+    background-color: #1e3a60;
+  }
+  .purchase__status {
+    margin-top: 1rem;
+    font-weight: bold;
+    color: #333;
+  }
+  
