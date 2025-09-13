@@ -1,3 +1,15 @@
+The Ice Vending App now includes a live Weather Widget on the homepage.
+It fetches real-time weather data from OpenWeatherMap
+ and displays conditions for Abidjan, Côte d’Ivoire (CI).
+
+Features
+
+Shows current temperature and weather description.
+
+Refreshes automatically when the page loads.
+
+Helps customers decide if they need more ice based on the weather.
+
 Frontend:
 
 React (Vite)
