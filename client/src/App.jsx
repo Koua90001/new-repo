@@ -10,6 +10,8 @@ import LoginModal from "./components/LoginModal";
 import RegisterModal from "./components/RegisterModal";
 import MomoTest from "./components/MomoTest";
 
+
+
 import Home from "./pages/Home";
 import Purchase from "./pages/Purchase";
 import Profile from "./pages/Profile";
@@ -71,6 +73,8 @@ function App() {
         <Header onLoginClick={openLoginModal} onRegisterClick={openRegisterModal} />
         
         <main>
+      
+        
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/purchase"   
