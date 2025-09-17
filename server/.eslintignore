@@ -1,0 +1,5 @@
+cat > .eslintignore <<'EOF'
+node_modules/
+logs/
+dist/
+EOF

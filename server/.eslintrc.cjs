@@ -1,13 +1,12 @@
-cat > eslintrc.cjs <<'EOF'
 module.exports = {
-  env: { es2022: true, node: true },
-  extends: ['airbnb-base'],
+  env: { node: true, es2021: true },
+  extends: ['eslint:recommended'],
   parserOptions: { ecmaVersion: 'latest', sourceType: 'script' },
   rules: {
-    'no-underscore-dangle': ['error', { allow: ['_id'] }],
-    'no-console': 'off',
+    quotes: ['error', 'single'],
+    'no-multiple-empty-lines': ['error', { max: 1, maxEOF: 0 }],
+    'consistent-return': 'error',
+    // the server doesn't use import rules; silence if pulled in indirectly
+    'import/no-extraneous-dependencies': 'off',
   },
-  ignorePatterns: ['logs/**'],
 };
-EOF
-

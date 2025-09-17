@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import "./Main.css";
 import barsImg from "../assets/Icebar.jpg";
 import blocksImg from "../assets/Iceblocks.jpg";
@@ -10,8 +9,7 @@ const products = [
     id: "bars",
     name: "Ice Bars",
     image: barsImg,
-    description:
-      "Long solid bars of clean, filtered ice. Ideal for coolers and transport.",
+    description: "Long solid bars of clean, filtered ice. Ideal for coolers and transport.",
     price: 2000,
   },
   {
@@ -25,93 +23,99 @@ const products = [
     id: "cubes",
     name: "Ice Cube Bags",
     image: cubesImg,
-    description:
-      "Bags of ice cubes ready for drinks, parties, or quick chill needs.",
+    description: "Bags of ice cubes ready for drinks, parties, or quick chill needs.",
     price: 500,
   },
 ];
 
 const Main = () => {
-  const [quantities, setQuantities] = useState({
-    bars: 0,
-    blocks: 0,
-    cubes: 0,
-  });
-
-  const navigate = useNavigate(); // ✅ init navigate
+  const [quantities, setQuantities] = useState({ bars: 0, blocks: 0, cubes: 0 });
 
   const handleQuantityChange = (id, value) => {
-    setQuantities((prev) => ({
-      ...prev,
-      [id]: Math.max(0, value), // Prevent negative values
-    }));
+    const n = Number.isNaN(Number(value)) ? 0 : Number(value);
+    setQuantities((prev) => ({ ...prev, [id]: Math.max(0, n) }));
   };
 
   const handleBuy = (product) => {
     const count = quantities[product.id];
-    if (count > 0) {
-      navigate("/purchase", {
-        state: {
-          product: {
-            ...product,
-            quantity: count,
-            total: product.price * count,
-          },
-        },
-      });
-    } else {
+    if (count <= 0) {
+      // Not ideal UX but keeps behavior consistent. Consider inline error text instead of alert().
       alert("Please select at least one item.");
+      return;
     }
+
+    // Use the router from the page (Home) by dispatching a custom event
+    const event = new CustomEvent("purchase:navigate", {
+      detail: {
+        product: {
+          ...product,
+          quantity: count,
+          total: product.price * count,
+        },
+      },
+    });
+    window.dispatchEvent(event);
   };
 
   return (
-    <main className="main">
-      <h1 className="home__title">Welcome to the Ice Man</h1>
-      <p className="home__description">
-        Buy clean, fresh ice instantly and securely using mobile money.
-      </p>
-      <h1 className="main__title">Choose Your Ice</h1>
-      <p className="main__description">
-        We offer different forms of high-quality ice. Pick what suits your
-        needs!
-      </p>
-      <div className="main__products">
-        {products.map((product) => (
-          <div className="main__card" key={product.id}>
-            <img
-              src={product.image}
-              alt={product.name}
-              className="main__image"
-            />
-            <h3 className="main__name">{product.name}</h3>
-            <p className="main__text">{product.description}</p>
-            <p className="main__price">{product.price} CFA per unit</p>
+    // NOTE: not <main>; this is a section of the page
+    <section className="main" aria-label="Product list">
+      {/* Section heading is provided by Home. Keep this component heading at h4 to preserve hierarchy */}
+      <ul className="main__grid" role="list">
+        {products.map((product) => {
+          const inputId = `qty-${product.id}`;
+          return (
+            <li className="main__card" key={product.id}>
+              <article className="main__article">
+                <header className="main__header">
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="main__image"
+                    loading="lazy"
+                  />
+                  <h4 className="main__name">{product.name}</h4>
+                </header>
 
-            <div className="main__quantity">
-              <label htmlFor={`qty-${product.id}`}>Quantity:</label>
-              <input
-                type="number"
-                id={`qty-${product.id}`}
-                min="0"
-                value={quantities[product.id]}
-                onChange={(e) =>
-                  handleQuantityChange(product.id, parseInt(e.target.value))
-                }
-              />
-            </div>
+                <p className="main__text">{product.description}</p>
+                <p className="main__price">
+                  <span className="visually-hidden">Price:</span>
+                  {product.price.toLocaleString()} CFA per unit
+                </p>
 
-            <button
-              className="main__buy"
-              onClick={() => handleBuy(product)}
-            >
-              Buy
-            </button>
-          </div>
-        ))}
-      </div>
-    </main>
+                <div className="main__quantity">
+                  <label htmlFor={inputId} className="main__label">
+                    Quantity
+                  </label>
+                  <input
+                    id={inputId}
+                    name={inputId}
+                    type="number"
+                    min="0"
+                    inputMode="numeric"
+                    value={quantities[product.id]}
+                    onChange={(e) => handleQuantityChange(product.id, e.target.value)}
+                    className="main__input"
+                  />
+                </div>
+
+                <button
+                  type="button"
+                  className="main__buy"
+                  aria-label={`Buy ${product.name}`}
+                  onClick={() => handleBuy(product)}
+                >
+                  Buy
+                </button>
+              </article>
+            </li>
+          );
+        })}
+      </ul>
+    </section>
   );
 };
 
 export default Main;
+
 

@@ -2,6 +2,7 @@
 .weather__title { 
 margin: 0 0 8px; 
 font-size: 1rem; 
+color: black;
 }
 
 .weather__row { 
@@ -18,6 +19,7 @@ flex-direction: column;
 font-size: 1.75rem; 
 font-weight: 700; 
 line-height: 1; 
+color: blue;
 }
 
 .weather__desc { 
