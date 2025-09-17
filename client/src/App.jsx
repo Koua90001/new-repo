@@ -5,6 +5,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Preloader from "./components/Preloader";
+import LoginModal from "./components/LoginModal";
+import RegisterModal from "./components/RegisterModal";
 
 import Home from "./pages/Home";
 import Purchase from "./pages/Purchase";
@@ -90,7 +92,9 @@ function App() {
               path="/purchase"
               element={
                 <Purchase
-                  onPurchaseComplete={(updatedUser) => setCurrentUser(updatedUser)}
+                  onPurchaseComplete={(updatedUser) =>
+                    setCurrentUser(updatedUser)
+                  }
                 />
               }
             />
@@ -109,8 +113,21 @@ function App() {
 
         <Footer />
 
-        {/* Your existing modal wrapper stays the same */}
-        {/* ... */}
+        {modalType === "login" && (
+          <LoginModal
+            onClose={closeModal}
+            onLoginSuccess={(user, token) => {
+              setCurrentUser(user);
+              setIsLoggedIn(true);
+              setToken(token);
+              closeModal();
+            }}
+          />
+        )}
+
+        {modalType === "register" && (
+          <RegisterModal onClose={closeModal} onRegister={handleRegister} />
+        )}
       </div>
     </Router>
   );

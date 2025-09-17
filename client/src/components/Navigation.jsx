@@ -9,7 +9,7 @@ export default function Navigation({ isLoggedIn = false }) {
     <nav className="nav" aria-label="Primary">
       <div className="nav__inner">
         <NavLink to="/" className="nav__brand" onClick={() => setOpen(false)}>
-          ICE MAN WORLD
+         
         </NavLink>
 
         {/* Hamburger (mobile) */}
