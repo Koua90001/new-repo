@@ -5,6 +5,13 @@
   text-align: center;
 }
 
+.page {
+  width: min(1100px, 100%);
+  margin: 0 auto;
+  padding: 0 16px 24px;
+}
+
+
 .logo {
   height: 6em;
   padding: 1.5em;

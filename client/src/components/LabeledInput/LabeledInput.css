@@ -1,0 +1,29 @@
+.labeledInput {
+    display: grid;
+    gap: 6px;
+  }
+  
+  .labeledInput label {
+    font-weight: 600;
+  }
+  
+  .labeledInput input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 12px;
+    border: 1px solid var(--border, #e5e7eb);
+    border-radius: 10px;
+    font: inherit;
+  }
+  
+  /* Align into two columns on wider modals */
+  @media (min-width: 480px) {
+    .labeledInput {
+      grid-template-columns: 140px 1fr;
+      align-items: center;
+    }
+    .labeledInput label {
+      text-align: right;
+      padding-right: 10px;
+    }
+  }

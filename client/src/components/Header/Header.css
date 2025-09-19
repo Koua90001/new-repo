@@ -1,0 +1,109 @@
+:root {
+  --header-bg: #ffffff;
+  --ink: #0f172a;            /* very dark slate */
+  --muted: #475569;          /* slate */
+  --brand: #0ea5e9;          /* sky-500 */
+  --border: #e5e7eb;         /* gray-200 */
+  --btn-text: #ffffff;
+  --btn-ghost-text: #0f172a;
+  --radius: 12px;
+  --shadow: 0 1px 2px rgb(0 0 0 / 4%);
+}
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: var(--bg, #fff);
+  border-bottom: 1px solid var(--border, #e5e7eb);
+  box-shadow: var(--shadow);
+}
+
+/* Top row: brand + auth buttons */
+.header__top {
+  display: flex;
+  gap: 12px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 10px 16px;
+}
+
+.header__brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header__controls {
+  /* nav toggle + auth buttons in the same row on mobile */
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header__logo {
+  display: block;
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+}
+
+.header__title {
+  margin: 0;
+  color: var(--ink);
+  font-weight: 800;
+  /* bigger on mobile; scales up on larger screens */
+  font-size: clamp(1.125rem, 3.8vw, 1.5rem);
+  letter-spacing: 0.2px;
+}
+
+.header__auth {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.header__button {
+  appearance: none;
+  border: 1px solid var(--border);
+  background: #f8fafc;
+  color: var(--btn-ghost-text);
+  padding: 0.55rem 0.9rem;
+  border-radius: var(--radius);
+  font-size: clamp(0.95rem, 3.5vw, 1rem);
+  line-height: 1.2;
+  cursor: pointer;
+}
+.header__button:hover { background: #eef2f7; }
+
+.header__button--primary {
+  background: var(--brand);
+  color: var(--btn-text);
+  border-color: transparent;
+}
+.header__button--primary:hover { filter: brightness(0.95); }
+
+.header__button--ghost {
+  background: #ffffff;
+}
+
+/* Second row: nav (collapsible on small via Navigation.css) */
+
+
+/* Desktop breakpoint: put brand and auth side-by-side in one row */
+@media (min-width: 768px) {
+  .header__top {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+  }
+
+  .header__nav {
+    padding: 0 1rem 0.75rem;
+  }
+}
+

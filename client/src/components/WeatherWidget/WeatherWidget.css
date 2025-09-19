@@ -1,0 +1,41 @@
+
+.weather__title { 
+margin: 0 0 8px; 
+font-size: 1rem; 
+color: black;
+}
+
+.weather__row { 
+align-items: center; 
+ 
+}
+
+.weather__main { 
+display: flex; 
+flex-direction: column; 
+}
+
+.weather__temp { 
+font-size: 1.75rem; 
+font-weight: 700; 
+line-height: 1; 
+color: blue;
+}
+
+.weather__desc { 
+color: #6b7280; 
+text-transform: capitalize; 
+}
+
+.weather__muted { 
+color: #6b7280; 
+margin: 4px 0; 
+}
+
+.weather__error { 
+color: #b91c1c; 
+margin: 4px 0; }
+
+.weather__icon { 
+width: 64px; 
+height: 64px; }

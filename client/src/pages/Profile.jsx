@@ -1,70 +1,92 @@
-// src/pages/Profile.jsx
-import React from "react";
+// client/src/pages/Profile.jsx
+import React, { useEffect, useState } from "react";
 import "./Profile.css";
+import { getToken } from "../utils/token";
+import { fetchUser } from "../utils/api";
 
-const Profile = ({ currentUser }) => {
-  if (!currentUser) {
-    return (
-      <div className="profile">
-        <h2 className="profile__title">My Profile</h2>
-        <p className="profile__message">Please log in to view your profile.</p>
-      </div>
-    );
+const formatMoney = (n) => (typeof n === "number" ? n.toLocaleString() : "—");
+const formatDate = (iso) => {
+  if (!iso) return "Date unavailable";
+  const d = new Date(iso);
+  return Number.isNaN(d.getTime()) ? "Date unavailable" : d.toLocaleString();
+};
+
+const Profile = ({ currentUser: userProp }) => {
+  const [user, setUser] = useState(userProp);
+  const [state, setState] = useState(userProp ? "idle" : "loading"); // loading | idle | error
+  const [err, setErr] = useState("");
+
+  useEffect(() => {
+    setUser(userProp);
+  }, [userProp]);
+
+  useEffect(() => {
+    if (userProp) return; // already provided by App
+    const token = getToken();
+    if (!token) {
+      setState("error");
+      setErr("Not logged in");
+      return;
+    }
+    setState("loading");
+    fetchUser(token)
+      .then((u) => {
+        setUser(u);
+        setState("idle");
+      })
+      .catch((e) => {
+        setErr(e.message || "Failed to load profile");
+        setState("error");
+      });
+  }, [userProp]);
+
+  if (state === "loading") {
+    return <div className="profile"><p>Loading profile…</p></div>;
+  }
+  if (state === "error") {
+    return <div className="profile"><p>⚠️ {err}</p></div>;
   }
 
-  const purchases = Array.isArray(currentUser.purchases)
-    ? currentUser.purchases
-    : [];
+  const purchases = user?.purchases || [];
 
   return (
     <div className="profile">
       <h2 className="profile__title">My Profile</h2>
 
-      <div className="profile__card">
+      <section className="profile__card">
         <img
-          src={currentUser.avatar}
+          src={user?.avatar}
           alt="User avatar"
           className="profile__avatar"
         />
-        <div className="profile__info">
-          <p>
-            <strong>Name:</strong> {currentUser.name}
-          </p>
-          <p>
-            <strong>Email:</strong> {currentUser.email}
-          </p>
-        </div>
-      </div>
+        <p><strong>Name:</strong> {user?.name || "—"}</p>
+        <p><strong>Email:</strong> {user?.email || "—"}</p>
+      </section>
 
-      <div className="profile__purchases">
+      <section className="profile__purchases">
         <h3>Purchase History</h3>
-
         {purchases.length === 0 ? (
-          <p>No purchases yet.</p>
+          <p className="profile__empty">No purchases yet.</p>
         ) : (
-          <ul className="profile__purchase-list">
-            {purchases.map((p, i) => (
-              <li key={`${p.purchasedAt ?? i}-${i}`} className="profile__purchase-item">
-                <div className="purchase-row">
-                  <span className="purchase-name">
-                    {p.quantity} × {p.name}
-                  </span>
-                  <span className="purchase-total">
-                    {Number(p.total).toLocaleString()} CFA
-                  </span>
-                </div>
-                <div className="purchase-meta">
-                  <small>
-                    {p.purchasedAt
-                      ? new Date(p.purchasedAt).toLocaleString()
-                      : "Date unavailable"}
-                  </small>
-                </div>
-              </li>
-            ))}
+          <ul className="profile__list">
+            {purchases.map((p) => {
+              const qty   = p.quantity ?? p.data?.quantity ?? 0;
+              const name  = p.name ?? p.title ?? p.data?.name ?? "Ice";
+              const total = p.total ?? p.data?.total;
+              const when  = p.purchasedAt ?? p.createdAt;
+              return (
+                <li key={p.id} className="profile__item">
+                  <div className="profile__row">
+                    <span className="profile__prod">{qty} × {name}</span>
+                    <span className="profile__amt">{formatMoney(total)} CFA</span>
+                  </div>
+                  <div className="profile__meta">{formatDate(when)}</div>
+                </li>
+              );
+            })}
           </ul>
         )}
-      </div>
+      </section>
     </div>
   );
 };

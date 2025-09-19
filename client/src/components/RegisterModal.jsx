@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import ModalWithForm from "./ModalWithForm";
+import ModalWithForm from "./ModalWithForm/ModalWithForm";
+import LabeledInput from "./LabeledInput/LabeledInput";
 
 const RegisterModal = ({ onClose, onRegister }) => {
   const [form, setForm] = useState({
@@ -8,12 +9,10 @@ const RegisterModal = ({ onClose, onRegister }) => {
     email: "",
     password: "",
   });
-
   const [error, setError] = useState("");
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+  const handleChange = (e) =>
+    setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -22,46 +21,57 @@ const RegisterModal = ({ onClose, onRegister }) => {
   };
 
   return (
-    <ModalWithForm onClose={onClose}>
-      <form className="modal__form" onSubmit={handleSubmit}>
-        <h2>Register</h2>
-
-        <input
+    <ModalWithForm onClose={onClose} title="Create your account">
+      <form className="modal__form" onSubmit={handleSubmit} noValidate>
+        <LabeledInput
+          id="reg-name"
           name="name"
-          placeholder="Full Name"
+          label="Full name"
           value={form.name}
           onChange={handleChange}
+          placeholder="e.g. Alice Johnson"
           required
+          autoComplete="name"
         />
-        <input
+        <LabeledInput
+          id="reg-avatar"
           name="avatar"
-          placeholder="Avatar URL"
+          label="Avatar URL"
           value={form.avatar}
           onChange={handleChange}
+          placeholder="https://…"
           required
+          autoComplete="url"
+          inputMode="url"
         />
-        <input
+        <LabeledInput
+          id="reg-email"
           name="email"
           type="email"
-          placeholder="Email"
+          label="Email"
           value={form.email}
           onChange={handleChange}
+          placeholder="you@example.com"
           required
+          autoComplete="email"
         />
-        <input
+        <LabeledInput
+          id="reg-password"
           name="password"
           type="password"
-          placeholder="Password"
+          label="Password"
           value={form.password}
           onChange={handleChange}
+          placeholder="••••••••"
           required
+          autoComplete="new-password"
         />
 
-        {error && <p className="modal__error">{error}</p>}
+        {error && <p className="modal__error" role="alert">{error}</p>}
 
         <div className="modal__actions">
-          <button type="submit">Register</button>
           <button type="button" onClick={onClose}>Cancel</button>
+          <button type="submit" className="primary">Register</button>
         </div>
       </form>
     </ModalWithForm>

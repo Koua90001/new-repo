@@ -1,35 +1,52 @@
-import React from "react";
-import Main from "../components/Main";
-import ItemsList from "../components/ItemsList";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";   // ✅ import useNavigate
+import Main from "../components/Main/Main";
+import WeatherWidget from "../components/WeatherWidget/WeatherWidget";
 import "./Home.css";
 
 const Home = () => {
   const navigate = useNavigate();
 
-  const handleSelect = () => {
-    const selectedProduct = {
-      id: "bag5",
-      name: "5kg Ice Bag",
-      price: 1000,
-      quantity: 1,
-      total: 1000,
-      description: "Clean, filtered, food-grade ice.",
+  useEffect(() => {
+    const handler = (e) => {
+      navigate("/purchase", { state: { product: e.detail.product } });
     };
-
-    // NOTE: wrap in { product: ... } so Purchase can read location.state.product
-    navigate("/purchase", { state: { product: selectedProduct } });
-  };
+    window.addEventListener("purchase:navigate", handler);
+    return () => window.removeEventListener("purchase:navigate", handler);
+  }, [navigate]);
 
   return (
-    <div className="home">
-      <Main />
-      <section className="home__info">
-        <div className="home__features">
-          <div className="home__feature">❄️ Freshly frozen, filtered ice</div>
-          <div className="home__feature">📱 Pay with MTN & Orange</div>
-          <div className="home__feature">🕒 24/7 vending availability</div>
-        </div>
+    <div className="home" role="document">
+      <h1 className="home__title">Welcome to the Ice Man</h1>
+
+      <section className="home__intro" aria-labelledby="home-intro-heading">
+        <h2 id="home-intro-heading" className="home__heading">
+          Shop fresh, filtered ice
+        </h2>
+        <p className="home__description">
+          Buy clean, fresh ice instantly and securely using mobile money.
+        </p>
+      </section>
+
+      <section className="home__products" aria-labelledby="home-products-heading">
+        <h2 id="home-products-heading" className="home__heading">Choose your ice</h2>
+        <Main />
+      </section>
+
+      <section className="home__weather" aria-labelledby="home-weather-heading">
+        <h2 id="home-weather-heading" className="home__heading">
+          Current weather in Abidjan
+        </h2>
+        <WeatherWidget city="Abidjan,CI" />
+      </section>
+
+      <section className="home__features" aria-labelledby="home-features-heading">
+        <h2 id="home-features-heading" className="home__heading"></h2>
+        <ul className="home__feature-list">
+          <li className="home__feature">❄️ Freshly frozen, filtered ice</li>
+          <li className="home__feature">📱 Pay with MTN & Orange</li>
+          <li className="home__feature">🕒 24/7 vending availability</li>
+        </ul>
       </section>
     </div>
   );

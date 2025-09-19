@@ -1,0 +1,101 @@
+.modal {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;          /* centers content */
+  background: rgba(0,0,0,.45);  /* backdrop */
+  z-index: 1000;
+}
+
+.modal__content {
+  width: min(90vw, 420px);
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 20px 50px rgba(0,0,0,.25);
+  outline: none;                /* we'll show focus on inner elements */
+}
+
+.modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.modal__title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #111827; /* good contrast */
+}
+
+.modal__close {
+  display: inline-grid;
+  place-items: center;
+  width: 36px; height: 36px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.modal__body {
+  display: grid;
+  gap: 10px;
+}
+
+.modal__form { 
+  display: grid; 
+  gap: 12px; 
+}
+
+.field {
+  display: flex;
+  flex-direction: column;   /* Stack label above input */
+  gap: 0.35rem;             /* Space between label and input */
+  margin-bottom: 1rem;      /* Space between fields */
+}
+
+.field__label { 
+  font-weight: 600; 
+  color: #111827; 
+  font-size: 0.95rem;
+}
+
+.field__input {
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+  color: #1f2937;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+
+.modal__actions {
+  display: flex;
+  gap: .5rem;
+  justify-content: flex-end;
+  margin-top: .5rem;
+
+}
+
+.modal__error { 
+  color: #b91c1c; 
+}
+
+button[type="submit"],
+button.primary {
+  background: #1d4ed8;   /* blue-700 */
+  color: #fff;
+  border: 1px solid transparent;
+  padding: .6rem .9rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+button[type="submit"]:hover,
+button.primary:hover { 
+  background: #1e40af; 
+} /* blue-800 */
