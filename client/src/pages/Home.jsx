@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";   // ✅ import useNavigate
-import Main from "../components/Main";
-import WeatherWidget from "../components/WeatherWidget";
+import Main from "../components/Main/Main";
+import WeatherWidget from "../components/WeatherWidget/WeatherWidget";
 import "./Home.css";
 
 const Home = () => {
@@ -42,7 +42,7 @@ const Home = () => {
 
       <section className="home__features" aria-labelledby="home-features-heading">
         <h2 id="home-features-heading" className="home__heading"></h2>
-        <ul className="home__featureList">
+        <ul className="home__feature-list">
           <li className="home__feature">❄️ Freshly frozen, filtered ice</li>
           <li className="home__feature">📱 Pay with MTN & Orange</li>
           <li className="home__feature">🕒 24/7 vending availability</li>

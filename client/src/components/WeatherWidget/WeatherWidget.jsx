@@ -1,8 +1,6 @@
-// client/src/components/WeatherWidget.jsx
 import React, { useEffect, useState } from "react";
 import "./WeatherWidget.css";
-
-const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
+import { fetchCurrentWeather } from "../../services/weather";
 
 export default function WeatherWidget({ city = "Abidjan,CI" }) {
   const [data, setData] = useState(null);
@@ -10,29 +8,25 @@ export default function WeatherWidget({ city = "Abidjan,CI" }) {
   const [err, setErr] = useState("");
 
   useEffect(() => {
-    async function load() {
-      if (!API_KEY) {
-        setState("error");
-        setErr("Missing VITE_WEATHER_API_KEY");
-        return;
-      }
-      setState("loading");
-      try {
-        const res = await fetch(
-          `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(
-            city
-          )}&appid=${API_KEY}&units=metric`
-        );
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const json = await res.json();
+    let isMounted = true;
+    setState("loading");
+    setErr("");
+
+    fetchCurrentWeather(city)
+      .then((json) => {
+        if (!isMounted) return;
         setData(json);
         setState("idle");
-      } catch (e) {
+      })
+      .catch((e) => {
+        if (!isMounted) return;
         setState("error");
         setErr(e.message || "Failed to load weather");
-      }
-    }
-    load();
+      });
+
+    return () => {
+      isMounted = false;
+    };
   }, [city]);
 
   return (

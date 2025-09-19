@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import "./ModalWithForm.css";
-import closeBtn from "../assets/closeBtn.svg";
+import closeBtn from "../../assets/closeBtn.svg";
 
 const ModalWithForm = ({ children, onClose, title = "Dialog" }) => {
   const dialogRef = useRef(null);

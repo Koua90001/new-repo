@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import ModalWithForm from "./ModalWithForm";
-import LabeledInput from "./LabeledInput";
+import ModalWithForm from "./ModalWithForm/ModalWithForm";
+import LabeledInput from "./LabeledInput/LabeledInput";
 import { loginUser } from "../utils/api";
 import { setToken } from "../utils/token";
 

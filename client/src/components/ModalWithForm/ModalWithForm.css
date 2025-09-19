@@ -45,16 +45,34 @@
   gap: 10px;
 }
 
-.modal__form { display: grid; gap: 10px; }
+.modal__form { 
+  display: grid; 
+  gap: 12px; 
+}
 
-.field__label { font-weight: 600; color: #111827; }
+.field {
+  display: flex;
+  flex-direction: column;   /* Stack label above input */
+  gap: 0.35rem;             /* Space between label and input */
+  margin-bottom: 1rem;      /* Space between fields */
+}
+
+.field__label { 
+  font-weight: 600; 
+  color: #111827; 
+  font-size: 0.95rem;
+}
+
 .field__input {
-  padding: .6rem .75rem;
+  padding: 0.6rem 0.75rem;
   border: 1px solid #e5e7eb;
   border-radius: 8px;
   background: #fff;
   color: #1f2937;
+  font-size: 1rem;
+  line-height: 1.4;
 }
+
 
 .modal__actions {
   display: flex;
@@ -64,7 +82,9 @@
 
 }
 
-.modal__error { color: #b91c1c; }
+.modal__error { 
+  color: #b91c1c; 
+}
 
 button[type="submit"],
 button.primary {
@@ -76,4 +96,6 @@ button.primary {
   cursor: pointer;
 }
 button[type="submit"]:hover,
-button.primary:hover { background: #1e40af; } /* blue-800 */
+button.primary:hover { 
+  background: #1e40af; 
+} /* blue-800 */

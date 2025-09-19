@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import "./Main.css";
-import barsImg from "../assets/Icebar.jpg";
-import blocksImg from "../assets/Iceblocks.jpg";
-import cubesImg from "../assets/icecube.jpg";
+import barsImg from "../../assets/Icebar.jpg";
+import blocksImg from "../../assets/Iceblocks.jpg";
+import cubesImg from "../../assets/icecube.jpg";
 
 const products = [
   {

@@ -1,7 +1,7 @@
 // src/components/ItemsList.jsx
 import React, { useEffect, useState } from "react";
-import { fetchItems } from "../utils/api";
-import Preloader from "./Preloader";
+import { fetchItems } from "../../utils/api";
+import Preloader from "../Preloader";
 import ItemCard from "./ItemCard";
 import "./ItemsList.css";
 
